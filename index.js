@@ -2,6 +2,8 @@ const express = require("express");
 
 var app = express();
 
+app.use(express.json());
+
 const port = process.env.PORT || 3000
 
 const heroes = [
@@ -31,8 +33,13 @@ app.get("/api/heroes/:id", (req, res) => {
   }
 })
 
-app.post("/", (req, res) => {
-  res.send(["Spiderman"]);
+app.post("/api/heroes", (req, res) => {
+  let hero = {
+    id: heroes.length + 1,
+    name: req.body.name
+  }
+  heroes.push(hero)
+  res.send(hero);
 })
 
 app.put("/", (req, res) => {
