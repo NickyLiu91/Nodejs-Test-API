@@ -54,8 +54,26 @@ app.post("/api/heroes", (req, res) => {
   res.send(hero);
 })
 
-app.put("/", (req, res) => {
-  res.send(["Superman", "Batman Beyond", "The Flash"]);
+app.put("/api/heroes/:id", (req, res) => {
+  let hero = heroes.find(c => c.id === parseInt(req.params.id))
+
+  if (!hero) {
+    res.status(404).send('The hero with the given ID was not found')
+  }
+
+  const schema = {
+    name: Joi.string().min(2).required()
+  }
+
+  const result = Joi.validate(req.body, schema)
+
+  if (result.error) {
+    res.status(400).send(result.error.details[0].message)
+    return;
+  }
+
+  hero.name = req.body.name;
+  res.send(hero)
 })
 
 app.delete("/", (req, res) => {
