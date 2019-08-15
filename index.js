@@ -59,6 +59,7 @@ app.put("/api/heroes/:id", (req, res) => {
 
   if (!hero) {
     res.status(404).send('The hero with the given ID was not found')
+    return;
   }
 
   const schema = {
@@ -76,6 +77,18 @@ app.put("/api/heroes/:id", (req, res) => {
   res.send(hero)
 })
 
-app.delete("/", (req, res) => {
-  res.send(["Superman", "Batman"]);
+app.delete("/api/heroes/:id", (req, res) => {
+  let hero = heroes.find(c => c.id === parseInt(req.params.id))
+
+  if (!hero) {
+    res.status(404).send('The hero with the given ID was not found');
+    return;
+  }
+  console.log(hero)
+
+  const index = heroes.indexOf(hero);
+  console.log(index)
+  heroes.splice(index, 1);
+
+  res.send(hero)
 })
