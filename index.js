@@ -7,10 +7,22 @@ app.use(express.json());
 
 const port = process.env.PORT || 3000
 
-const heroes = [
-  {id: 1, name: "Superman"},
-  {id: 2, name: "Batman"},
-  {id: 3, name: "The Flash"}
+const accounts = [
+  {id: 1, name: "Yugi"},
+  {id: 2, name: "Kaiba"},
+  {id: 3, name: "Joey"}
+]
+
+const threads = [
+  {id: 1, account_id: 1, title: "Yugi Post 1"},
+  {id: 2, account_id: 2, title: "Kaiba Post 1"},
+  {id: 3, account_id: 3, title: "Joey Post 1"}
+]
+
+const posts = [
+  {id: 1, account_id: 1, post_id: 1, text: "Dark Magician is the best!"},
+  {id: 2, account_id: 2, post_id: 1, text: "No, Blue-Eyes is the best!"},
+  {id: 3, account_id: 3, post_id: 3, text: "Time-wizard!"}
 ]
 
 app.listen(port, () => {
