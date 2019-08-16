@@ -33,20 +33,20 @@ app.get("/", (req, res) => {
   res.send("Hello good sir!");
 })
 
-app.get("/api/heroes", (req, res) => {
-  res.send(heroes);
+app.get("/api/accounts", (req, res) => {
+  res.send(accounts);
 })
 
-app.get("/api/heroes/:id", (req, res) => {
-  let hero = heroes.find(c => c.id === parseInt(req.params.id))
-  if (!hero) {
-    res.status(404).send('The hero with the given ID was not found')
+app.get("/api/accounts/:id", (req, res) => {
+  let account = accounts.find(c => c.id === parseInt(req.params.id))
+  if (!account) {
+    res.status(404).send('The account with the given ID was not found')
   } else {
-    res.send(hero)
+    res.send(account)
   }
 })
 
-app.post("/api/heroes", (req, res) => {
+app.post("/api/accounts", (req, res) => {
   const schema = {
     name: Joi.string().min(2).required()
   }
@@ -58,19 +58,19 @@ app.post("/api/heroes", (req, res) => {
     return;
   }
 
-  let hero = {
-    id: heroes.length + 1,
+  let account = {
+    id: accounts.length + 1,
     name: req.body.name
   }
-  heroes.push(hero)
-  res.send(hero);
+  accounts.push(account)
+  res.send(account);
 })
 
-app.put("/api/heroes/:id", (req, res) => {
-  let hero = heroes.find(c => c.id === parseInt(req.params.id))
+app.put("/api/accounts/:id", (req, res) => {
+  let account = accounts.find(c => c.id === parseInt(req.params.id))
 
-  if (!hero) {
-    res.status(404).send('The hero with the given ID was not found')
+  if (!account) {
+    res.status(404).send('The account with the given ID was not found')
     return;
   }
 
@@ -85,22 +85,166 @@ app.put("/api/heroes/:id", (req, res) => {
     return;
   }
 
-  hero.name = req.body.name;
-  res.send(hero)
+  account.name = req.body.name;
+  res.send(account)
 })
 
-app.delete("/api/heroes/:id", (req, res) => {
-  let hero = heroes.find(c => c.id === parseInt(req.params.id))
+app.delete("/api/accounts/:id", (req, res) => {
+  let account = accounts.find(c => c.id === parseInt(req.params.id))
 
-  if (!hero) {
-    res.status(404).send('The hero with the given ID was not found');
+  if (!account) {
+    res.status(404).send('The account with the given ID was not found');
     return;
   }
-  console.log(hero)
+  console.log(account)
 
-  const index = heroes.indexOf(hero);
+  const index = accounts.indexOf(account);
   console.log(index)
-  heroes.splice(index, 1);
+  accounts.splice(index, 1);
 
-  res.send(hero)
+  res.send(account)
+})
+
+app.get("/api/threads", (req, res) => {
+  res.send(threads);
+})
+
+app.get("/api/threads/:id", (req, res) => {
+  let thread = accounts.find(c => c.id === parseInt(req.params.id))
+  if (!thread) {
+    res.status(404).send('The thread with the given ID was not found')
+  } else {
+    res.send(thread)
+  }
+})
+
+app.post("/api/threads", (req, res) => {
+  const schema = {
+    name: Joi.string().min(2).required()
+  }
+
+  const result = Joi.validate(req.body, schema)
+
+  if (result.error) {
+    res.status(400).send(result.error.details[0].message)
+    return;
+  }
+
+  let thread = {
+    id: accounts.length + 1,
+    name: req.body.name
+  }
+  accounts.push(thread)
+  res.send(thread);
+})
+
+app.put("/api/threads/:id", (req, res) => {
+  let thread = accounts.find(c => c.id === parseInt(req.params.id))
+
+  if (!thread) {
+    res.status(404).send('The thread with the given ID was not found')
+    return;
+  }
+
+  const schema = {
+    name: Joi.string().min(2).required()
+  }
+
+  const result = Joi.validate(req.body, schema)
+
+  if (result.error) {
+    res.status(400).send(result.error.details[0].message)
+    return;
+  }
+
+  thread.name = req.body.name;
+  res.send(thread)
+})
+
+app.delete("/api/threads/:id", (req, res) => {
+  let thread = theads.find(c => c.id === parseInt(req.params.id))
+
+  if (!thread) {
+    res.status(404).send('The thread with the given ID was not found');
+    return;
+  }
+  console.log(thread)
+
+  const index = accounts.indexOf(thread);
+  console.log(index)
+  accounts.splice(index, 1);
+
+  res.send(thread)
+})
+
+app.get("/api/posts", (req, res) => {
+  res.send(posts);
+})
+
+app.get("/api/posts/:id", (req, res) => {
+  let post = accounts.find(c => c.id === parseInt(req.params.id))
+  if (!post) {
+    res.status(404).send('The post with the given ID was not found')
+  } else {
+    res.send(post)
+  }
+})
+
+app.post("/api/posts", (req, res) => {
+  const schema = {
+    name: Joi.string().min(2).required()
+  }
+
+  const result = Joi.validate(req.body, schema)
+
+  if (result.error) {
+    res.status(400).send(result.error.details[0].message)
+    return;
+  }
+
+  let post = {
+    id: accounts.length + 1,
+    name: req.body.name
+  }
+  accounts.push(post)
+  res.send(post);
+})
+
+app.put("/api/posts/:id", (req, res) => {
+  let post = accounts.find(c => c.id === parseInt(req.params.id))
+
+  if (!post) {
+    res.status(404).send('The post with the given ID was not found')
+    return;
+  }
+
+  const schema = {
+    name: Joi.string().min(2).required()
+  }
+
+  const result = Joi.validate(req.body, schema)
+
+  if (result.error) {
+    res.status(400).send(result.error.details[0].message)
+    return;
+  }
+
+  post.name = req.body.name;
+  res.send(post)
+})
+
+app.delete("/api/posts/:id", (req, res) => {
+  let post = theads.find(c => c.id === parseInt(req.params.id))
+
+  if (!post) {
+    res.status(404).send('The post with the given ID was not found');
+    return;
+  }
+  console.log(post)
+
+  const index = accounts.indexOf(post);
+  console.log(index)
+  accounts.splice(index, 1);
+
+  res.send(post)
 })
