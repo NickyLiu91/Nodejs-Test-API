@@ -1,5 +1,5 @@
 // var express = require('express');
-// var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
 // var routes = require('./routes/index.js');
 
@@ -17,6 +17,8 @@ var app = express();
 
 app.use(express.json());
 //
+
+mongoose.connect("mongodb+srv://uthor123:anivia666@cluster0-hnegv.mongodb.net/test?retryWrites=true&w=majority", {useNewUrlParser: true})
 
 const port = process.env.PORT || 3000
 
@@ -85,9 +87,9 @@ const posts = [
 // }
 
 //middleware
-app.use('/', () => {
-  console.log("WOAH!")
-})
+// app.use('/', () => {
+//   console.log("WOAH!")
+// })
 
 app.get("/", (req, res) => {
   res.send("Hello good sir!");
