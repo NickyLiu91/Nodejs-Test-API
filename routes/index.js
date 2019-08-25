@@ -1,7 +1,9 @@
 // var app = require('../app')
 // var account = require('../controllers/accountController');
 const express = require("express");
-const Joi = require('joi');
+// const Joi = require('joi');
+// const mongoose = require('mongoose');
+
 
 var app = express();
 
@@ -14,22 +16,52 @@ app.listen(port, () => {
    console.log(`server on port ${port}`);
 });
 
+var account1 = {id: 1, name: "Yugi"}
+var account2 = {id: 2, name: "Kaiba"}
+var account3 = {id: 3, name: "Joey"}
+
+// const accounts = [
+//   {id: 1, name: "Yugi"},
+//   {id: 2, name: "Kaiba"},
+//   {id: 3, name: "Joey"}
+// ]
+
 const accounts = [
-  {id: 1, name: "Yugi"},
-  {id: 2, name: "Kaiba"},
-  {id: 3, name: "Joey"}
+  account1,
+  account2,
+  account3
 ]
+
+var thread1 = {id: 1, account_id: account1.id, title: "Yugi Post 1"}
+var thread2 = {id: 2, account_id: account2.id, title: "Kaiba Post 1"}
+var thread3 = {id: 3, account_id: account3.id, title: "Joey Post 1"}
+
+// const threads = [
+//   {id: 1, account_id: 1, title: "Yugi Post 1"},
+//   {id: 2, account_id: 2, title: "Kaiba Post 1"},
+//   {id: 3, account_id: 3, title: "Joey Post 1"}
+// ]
 
 const threads = [
-  {id: 1, account_id: 1, title: "Yugi Post 1"},
-  {id: 2, account_id: 2, title: "Kaiba Post 1"},
-  {id: 3, account_id: 3, title: "Joey Post 1"}
+  thread1,
+  thread2,
+  thread3
 ]
 
+var post1 = {id: 1, account_id: account1.id, thread_id: thread1.id, text: "Dark Magician is the best!"}
+var post2 = {id: 2, account_id: account2.id, thread_id: thread2.id, text: "No, Blue Eyes is the best!"}
+var post3 = {id: 3, account_id: account3.id, thread_id: thread3.id, text: "Time Wizard!"}
+
+// const posts = [
+//   {id: 1, account_id: 1, post_id: 1, text: "Dark Magician is the best!"},
+//   {id: 2, account_id: 2, post_id: 1, text: "No, Blue-Eyes is the best!"},
+//   {id: 3, account_id: 3, post_id: 3, text: "Time-wizard!"}
+// ]
+
 const posts = [
-  {id: 1, account_id: 1, post_id: 1, text: "Dark Magician is the best!"},
-  {id: 2, account_id: 2, post_id: 1, text: "No, Blue-Eyes is the best!"},
-  {id: 3, account_id: 3, post_id: 3, text: "Time-wizard!"}
+  post1,
+  post2,
+  post3
 ]
 
 
