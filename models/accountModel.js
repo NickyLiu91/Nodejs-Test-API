@@ -1,20 +1,9 @@
-import mongoose, {
-  Schema
-} from 'mongoose';
+const mongoose = require('mongoose');
 
-const AccountScheme = new Schema({
-  name: {
-    type: String,
-    required: "Enter a name."
-  },
-  password: {
-    type: String,
-    required: "Enter a password."
-  },
-  created: {
-    type: Date,
-    default: new Date
-  }
+const accountSchema = mongoose.Schema({
+  _id: mongoose.Types.ObjectId,
+  name: String,
+  password: String
 });
 
-export default mongoose.model('Account', AccountScheme);
+module.exports = mongoose.model('Account', accountSchema);
