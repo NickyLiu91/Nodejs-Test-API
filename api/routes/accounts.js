@@ -8,12 +8,20 @@ const Account = require('../models/account')
 // var account2 = {name: "Kaiba"}
 // var account3 = {name: "Joey"}
 //
-const accounts = [
-
-]
 
 router.get("/api/accounts", (req, res) => {
-  res.send(accounts);
+  Account.find()
+  .exec()
+  .then(docs => {
+    console.log(docs)
+    res.status(200).json(docs)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({
+      error: err
+    })
+  })
 })
 
 router.get("/api/accounts/:id", (req, res) => {
@@ -22,7 +30,11 @@ router.get("/api/accounts/:id", (req, res) => {
   .exec()
   .then(doc => {
     console.log(doc)
-    res.status(200).json(doc)
+    if (doc) {
+      res.status(200).json(doc)
+    } else {
+      res.status(404).json({message: 'No valid entry found for provided ID'})
+    }
   })
   .catch(err => {
     console.log(err)
@@ -44,12 +56,19 @@ router.post("/api/accounts", (req, res) => {
     password: req.body.password
   })
   account.save()
-  .then(result => {console.log(result)})
-  .catch(err => {console.log(error)});
-  res.status(201).json({
-    message: "Handling POST requests to /accounts",
-    createdAccount: account
+  .then(result => {
+    console.log(result)
+    res.status(201).json({
+      message: "Handling POST requests to /accounts",
+      createdAccount: account
+    })
   })
+  .catch(err => {
+    console.log(error)
+    res.status(500).json({
+      error: err
+    })
+  });
 
   // const result = Joi.validate(req.body, schema)
 
