@@ -4,17 +4,32 @@ const mongoose = require('mongoose')
 
 const Account = require('../models/account')
 
-var account1 = {name: "Yugi"}
-var account2 = {name: "Kaiba"}
-var account3 = {name: "Joey"}
-
+// var account1 = {name: "Yugi"}
+// var account2 = {name: "Kaiba"}
+// var account3 = {name: "Joey"}
+//
 const accounts = [
-  account1,
-  account2,
-  account3
+
 ]
 
+router.get("/api/accounts", (req, res) => {
+  res.send(accounts);
+})
+
 router.get("/api/accounts/:id", (req, res) => {
+  const id = req.params.accountId
+  Account.fibdById(id)
+  .exec()
+  .then(doc => {
+    console.log(doc)
+    res.status(200).json(doc)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).son({error: err})
+  })
+
+
   let account = accounts.find(c => c.id === parseInt(req.params.id))
   if (!account) {
     res.status(404).send('The account with the given ID was not found')
@@ -23,18 +38,19 @@ router.get("/api/accounts/:id", (req, res) => {
   }
 })
 
-router.get("/api/accounts", (req, res) => {
-  res.send(accounts);
-})
-
 router.post("/api/accounts", (req, res) => {
   const account = new Account({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
     password: req.body.password
   })
-  account.save().then( resuly => {console.log(result)})
+  account.save()
+  .then(result => {console.log(result)})
   .catch(err => {console.log(error)});
+  res.status(201).json({
+    message: "Handling POST requests to /accounts",
+    createdAccount: account
+  })
 
   // const result = Joi.validate(req.body, schema)
 
@@ -59,16 +75,16 @@ router.put("/api/accounts/:id", (req, res) => {
     return;
   }
 
-  const schema = {
-    name: Joi.string().min(2).required()
-  }
+  // const schema = {
+  //   name: Joi.string().min(2).required()
+  // }
+  //
+  // const result = Joi.validate(req.body, schema)
 
-  const result = Joi.validate(req.body, schema)
-
-  if (result.error) {
-    res.status(400).send(result.error.details[0].message)
-    return;
-  }
+  // if (result.error) {
+  //   res.status(400).send(result.error.details[0].message)
+  //   return;
+  // }
 
   account.name = req.body.name;
   res.send(account)
