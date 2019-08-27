@@ -17,8 +17,8 @@ router.get("/api/accounts", (req, res) => {
 })
 
 router.get("/api/accounts/:id", (req, res) => {
-  const id = req.params.accountId
-  Account.fibdById(id)
+  const id = req.params.id
+  Account.findById(id)
   .exec()
   .then(doc => {
     console.log(doc)
@@ -29,13 +29,12 @@ router.get("/api/accounts/:id", (req, res) => {
     res.status(500).son({error: err})
   })
 
-
-  let account = accounts.find(c => c.id === parseInt(req.params.id))
-  if (!account) {
-    res.status(404).send('The account with the given ID was not found')
-  } else {
-    res.send(account)
-  }
+  // let account = accounts.find(c => c.id === parseInt(req.params.id))
+  // if (!account) {
+  //   res.status(404).send('The account with the given ID was not found')
+  // } else {
+  //   res.send(account)
+  // }
 })
 
 router.post("/api/accounts", (req, res) => {
