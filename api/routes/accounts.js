@@ -109,19 +109,32 @@ router.put("/api/accounts/:id", (req, res) => {
 })
 
 router.delete("/api/accounts/:id", (req, res) => {
-  let account = accounts.find(c => c.id === parseInt(req.params.id))
+  const id = req.params.id
+  Account.remove({_id: id})
+  .exec()
+  .then(result => {
+    res.status(200).json(result)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({
+      error: err
+    })
+  })
 
-  if (!account) {
-    res.status(404).send('The account with the given ID was not found');
-    return;
-  }
-  console.log(account)
-
-  const index = accounts.indexOf(account);
-  console.log(index)
-  accounts.splice(index, 1);
-
-  res.send(account)
+  // let account = accounts.find(c => c.id === parseInt(req.params.id))
+  //
+  // if (!account) {
+  //   res.status(404).send('The account with the given ID was not found');
+  //   return;
+  // }
+  // console.log(account)
+  //
+  // const index = accounts.indexOf(account);
+  // console.log(index)
+  // accounts.splice(index, 1);
+  //
+  // res.send(account)
 })
 
 module.exports = router
