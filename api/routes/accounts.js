@@ -85,13 +85,33 @@ router.post("/api/accounts", (req, res) => {
   // res.send(account);
 })
 
-router.put("/api/accounts/:id", (req, res) => {
-  let account = accounts.find(c => c.id === parseInt(req.params.id))
+router.patch("/api/accounts/:id", (req, res) => {
+  const id = req.params.id
+  // const updateOps = {}
+  //
+  // for (const ops of req.body) {
+  //   updateOps[ops.propName] = ops.value;
+  // }
 
-  if (!account) {
-    res.status(404).send('The account with the given ID was not found')
-    return;
-  }
+  Account.update({_id: id}, { $set: {name: req.body.newName, password: req.body.newPassword} })
+  .exec()
+  .then(result => {
+    console.log(result)
+    res.status(200).json(result)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({
+      error: err
+    })
+  })
+
+  // let account = accounts.find(c => c.id === parseInt(req.params.id))
+  //
+  // if (!account) {
+  //   res.status(404).send('The account with the given ID was not found')
+  //   return;
+  // }
 
   // const schema = {
   //   name: Joi.string().min(2).required()
@@ -104,8 +124,8 @@ router.put("/api/accounts/:id", (req, res) => {
   //   return;
   // }
 
-  account.name = req.body.name;
-  res.send(account)
+  // account.name = req.body.name;
+  // res.send(account)
 })
 
 router.delete("/api/accounts/:id", (req, res) => {
